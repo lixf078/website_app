@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+    <link href="../public/css/public.css" rel="stylesheet" type="text/css" />
+    <style>
+body{
+  min-height: 18rem;
+  background: white;
+}
+.headLogo{
+   width: 10rem;
+   height: 1.1067rem;
+   background: white;
+   left: 50%;
+   margin-left: -5rem;
+}
+.headLogo {
+   width: 10rem;
+   background: white;
+
+}
+.headLogo .back{
+   font-size: 0.7533rem;
+   line-height: 1.1067rem;
+   width: 0.4067rem;
+   height: 0.58067rem;
+   text-align: center;
+   background:url('img/back.png') no-repeat;
+   background-size: 100%;
+   display: block;
+   float: left;
+   font-family: '黑体';
+}
+.headLogo .text{
+   width: 100%;
+   text-align: center;
+}
+.headLogo .headLogoContent{
+   width: 9.2rem;
+   margin:0 auto;
+   overflow: hidden;
+   font-size: 0.4533rem;
+   text-align: center;
+   line-height: 1.1067rem;
+   color: #333333;
+   display: flex;
+   align-items: center;
+}
+.headLogo .headLogoContent img{
+   width:2.8rem;
+   display: block;
+   float: left;
+}
+.headTab {
+   background: white;
+   overflow: hidden;
+}
+.positionFixed{
+   position: fixed;
+   z-index: 1000;
+       display: flex;
+   align-items: center;
+}
+
+    </style>
+</head>
+<body>
+  <div id="title">
+    <div class="headLogo positionFixed">
+
+   <div class="headLogoContent">
+        <div class="back" onclick="closeWin()"></div>
+        <div class="text" id="titleText"></div>
+   </div>
+</div>
+<div class="headLogo"></div>
+<div class="white">
+
+</div>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="../../script/api.js"></script>
+
+<script>
+apiready = function () {
+    $api.fixStatusBar( $api.dom('header') );
+
+
+    api.setStatusBarStyle({
+        style: 'light'
+    });
+
+     var url= api.pageParam.url;
+     var titleValue=api.pageParam.title;
+     $api.dom('#titleText').innerHTML=titleValue;
+     funOpenFrame(url);
+}
+function closeWin(){
+  api.closeWin();
+}
+
+function funOpenFrame(url){
+  var browser = api.require('webBrowser');
+
+  browser.openView({
+    url: url,
+    rect: {
+      x: 0,
+      y:$api.dom('#title').offsetHeight,
+      w: api.winWidth,
+      h:'auto'
+    },
+  }, function(ret, err) {
+
+  });
+}
+
+</script>

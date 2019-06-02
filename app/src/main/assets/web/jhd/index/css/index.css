@@ -1,0 +1,426 @@
+*{margin:0; padding:0; list-style:none; }
+*{
+    -webkit-overflow-scrolling: touch;
+  } 
+  /* UI */
+.normalSize{
+    font-size:0.3733rem;
+}
+.titleText{
+    color:#2d2d2d;
+    font-size: 0.4667rem;
+}
+.blackColor{
+    color:#242424;
+}
+.grayColor{
+    color:#9f9f9f;
+}
+.blueColor{
+    color:#2d80e5;
+}
+.orangeColor{
+    color:#f3522e;
+}
+.redColor{
+    color:#fc404f;
+}
+.positionFixed{
+    position: fixed;
+    z-index: 1000;
+}
+  /* UI */
+
+a {
+    text-decoration:none;
+    text-decoration-line: none;
+    color: black;
+}
+
+.allBegin{
+    background: #f5f5f6;
+    overflow: hidden;
+    width:10rem;
+    margin: 0 auto;
+}
+.allBegin{
+    display: block;
+    overflow: hidden;
+}
+.allBegin .headLogo .headLogoContent{
+    width: 9.2rem;
+    margin:0 auto;
+    overflow: hidden;
+}
+.allBegin .headLogo .headLogoContent img{
+    width:2.8rem;
+    position: absolute;
+    display: block;
+}
+.headTab {
+    background: white;
+    overflow: hidden;
+}
+.headTab li{
+    width: 25%;
+    float: left;
+    height: 1.8533rem;
+    text-align: center;
+}
+.headTab li img{
+    margin:0.1733rem auto;
+    display: block;
+    width: 0.88rem;
+}
+.allBegin .scorllText{
+    width: 8.233rem;
+    height: 0.6133rem;
+    border-radius: 1rem;
+    margin:0 auto;
+    overflow: hidden;
+    padding:0 0.3333rem;
+}
+.allBegin .scorllText li{
+    line-height: 0.6133rem;
+    text-align:center;
+
+}
+.lBanner{
+    height:3.04rem;
+    width: 10rem;
+    position: relative;
+    margin: 0.2rem auto;
+    display: flex;
+    justify-content: center;
+}
+.swiper_play{
+    width: 18rem;
+    height:3.04rem;
+}
+
+.lBanner .swiper-wrapper .swiper-slide{
+    width: 6.0533rem ;
+    height: 3.04rem;
+    background-size: 100%;
+    box-shadow: 0 0 10px #dadada;
+    overflow: hidden;
+}
+
+.lBanner .swiper-wrapper .swiper-slide img{
+    width: 100%;
+    display: block;
+    float: left;
+}
+.lBanner a{
+    overflow: hidden;
+    display: block;
+}
+.lBanner .swiper-slide.swiper-slide-active {
+    box-shadow:0 0 10px #eaeaea;
+}
+.lBanner .swiper-container {
+    overflow: visible;
+}
+.sBanner{
+    height: 1.7466rem;
+    margin-bottom: 0.2rem;
+    width: 100%;
+    height:1.7466rem;
+    overflow: hidden;
+}
+.sBannerContent{
+    width: 9.2rem;
+    height: 1.7466rem;
+    margin: 0rem auto;
+    overflow: hidden;
+    position: relative;
+    border-radius: 0.15rem;
+}
+.sBannerContent img{
+    width: 9.2rem;
+    height: 1.7467rem;
+    display: block;
+    border-radius: 0.15rem;
+}
+.sBannerContent a{
+    overflow: hidden;
+    display: block;
+
+}
+.sBannerContent .swiper-pagination-fraction, .swiper-pagination-custom, .swiper-container-horizontal > .swiper-pagination-bullets {
+    bottom: -0.25rem !important;
+    width: 100%;
+}
+.sBannerContent .swiper-pagination-bullet-active {
+    opacity: 1;
+    background: white;
+}
+.spicalSkill{
+    background: white;
+    overflow: hidden;
+    margin-bottom: 0.2rem;
+}
+.spicalSkill .spicalSkillTitle{
+    width: 9.2rem;
+    line-height: 0.88rem;
+    font-size: 0.4533rem;
+    margin: 0 auto;
+
+}
+.spicalSkillContent_border{
+    border-top: 0.02rem solid #f2f2f2;
+    border-bottom: 0.02rem dashed #f2f2f2;
+    margin-bottom: 0.13rem;
+    padding-bottom: 0.02rem;
+    overflow: hidden;
+}
+.spicalSkillContent{
+    width: 9.2rem;
+    margin:0 auto;
+    overflow: hidden;
+    text-align:center;
+}
+.spicalSkillContent li{
+    width: 4.57rem;
+    float: left;    
+    overflow: hidden;
+
+}
+.spicalSkillContent li:nth-child(1){
+    overflow: hidden;
+    border-right: 0.02rem solid #f0f0f0;
+    border-bottom: 0.03rem solid #f0f0f0;
+}
+
+.spicalSkillContent li:nth-child(2){
+    overflow: hidden;
+    border-bottom: 0.03rem solid #f0f0f0;
+}
+.spicalSkillContent li:nth-child(3){
+    overflow: hidden;
+    border-right: 0.02rem solid #f0f0f0;
+}
+
+
+.spicalSkillContent li img{
+    width: 4.64rem;
+    height: 1.8667rem;
+    display: block;
+}
+
+.spicalSkillContent li:nth-child(1),.spicalSkillContent li:nth-child(3){
+    margin-left: 0;
+}
+
+.spicalSkillContent li .skillHead{
+    line-height: 0.8667rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.spicalSkillContent li .skillNum.redColor {
+    line-height: 0.7467rem;
+}
+.spicalSkillContent li .skillDanwei{
+    line-height: 0.66rem
+}
+.skillHead .logoImg{
+    margin: 0.1rem;
+    border-radius: 0.08rem;
+    overflow: hidden;
+}
+.skillHead img {
+    width: 0.6rem;
+    display: block
+}
+.skillNum{
+    font-size: 0.6rem;
+}
+.skillDanwei.grayColor {
+    font-size: 0.3333rem;
+}
+.blueColor.goNow {
+    line-height: 0.8rem;
+    border-top: 0.0267rem solid #ccc;
+    margin-top: 0.14rem;
+}
+
+.bottomR{
+    height: 1.28rem;
+    width: 10rem;
+}
+
+/* hotlist */
+.hotChoice{
+    overflow: hidden;
+    background:white;
+}
+.hotChoiceTitle{
+    width: 9.2rem;
+    line-height: 0.88rem;
+    font-size: 0.4533rem;
+    margin: 0 auto;
+    overflow: hidden;
+    border-bottom: 0.02rem solid #f2f2f2;
+}
+.hotChoiceTitle span{
+    float: left;
+}
+.hotChoiceTitle .allDai{
+    float: right;
+    font-size: 0.36rem;
+    color:#999999;
+}
+
+.hc_text h3{
+    color:black;
+}
+.skill{
+    color:black;
+}
+.hotChoiceContent{
+    width: 9.2rem;
+    margin:0 auto;
+    overflow: hidden;
+}
+.hotChoiceContent li{
+    height: 2.4267rem;
+    border-bottom: 0.02rem solid #f2f2f2;
+    font-size: 0.4533rem;
+}
+.hc_l_t_img img {
+    width: 0.9333rem;
+    display: block;
+}
+.hc_l_t_img {
+    display: block;
+    float: left;
+}
+
+.hc_l_t_text {
+    display: block;
+    float: left;
+}
+
+.hc_l_b {
+    margin-top: 0.2rem;
+    display: block;
+    font-size: 0.4rem;
+    float: left;
+}
+.hc_left {
+    width: 6rem;
+    float: left;
+}
+.hc_right{
+    width: 3rem;
+    float: left;
+}
+.hc_l_text2 {
+    font-size: 0.32rem;
+    display: block;
+    float: left;
+    color:#666666;
+    margin-top:0rem;
+}
+.hc_sucess {
+    font-size: 0.28rem;
+}
+.hc_l_t {
+    overflow: hidden;
+    margin-top: 0.3467rem;
+}
+.hc_l_r div{
+    width: 100%;
+    overflow: hidden;
+}
+.hc_l_r div span{
+    display: block;
+    float: right;
+}
+span.tab {
+    color: white;
+    font-size: 0.3rem;
+    display: block;
+    padding: 0.030rem 0.08rem;
+    float: left;
+    margin:0.05rem;
+    border-radius: 0.05rem;
+    padding-bottom: 0;
+    text-align: center;
+    margin-top: 0;
+}
+.new.tab{
+    background:#ff8c4c;
+}
+.fast.tab{
+    background:linear-gradient(45deg,#b247f1,#8d84f3);
+    background: -webkit-linear-gradient(45deg,#b247f1,#8d84f3);/* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(45deg,#b247f1,#8d84f3); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(45deg,#b247f1,#8d84f3); /* Firefox 3.6 - 15 */
+}
+.heigh.tab{
+    background:linear-gradient(45deg,#b247f1,#8d84f3);
+    background: -webkit-linear-gradient(45deg,#b247f1,#8d84f3);/* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(45deg,#b247f1,#8d84f3); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(45deg,#b247f1,#8d84f3); /* Firefox 3.6 - 15 */
+}
+.hot.tab{
+    background:linear-gradient(45deg,#ff5580,#f8867b);
+    background: -webkit-linear-gradient(45deg,#ff5580,#f8867b);/* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(45deg,#ff5580,#f8867b); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(45de，g#ff5580,#f8867b); /* Firefox 3.6 - 15 */
+}
+.hc_l_t_text .hc_text{
+    display: block;
+    font-size: 0.4267rem;
+    float: left;
+    margin-right: 0.2rem;
+}
+.hc_l_t_text div{
+    padding-left: 0.2rem;
+    line-height: 0.4667rem;
+    margin-top: 0.05rem;
+}
+.hc_l_t_text .hc_text h3{
+    font-size: 0.4333rem;
+    display: block;
+}
+.hc_l_b span{
+    display: block;
+    float: left;
+}
+.hc_l_b h4{
+    display: block;
+
+}
+.hc_l_b .days{
+    margin-left: 1rem;
+    color:#474747;
+}
+.hc_l_b .days h4{
+    font-size: 0.4267rem;
+    color:#474747;
+}
+.hc_l_r .hc_l_r_btn span{
+    width: 1.6333rem;
+    height: 0.667rem;
+    border-radius: 1rem;
+    line-height: 0.667rem;
+    text-align: center;
+    margin-top: 0.36rem;
+    border: 0.02rem solid #3ca2f6;
+    color: #3ca2f6;
+    font-size: 0.4rem;
+}
+.hc_l_r .hc_sucess{
+    margin-top: 0.67rem;
+}
+.hc_l_r .hc_sucess span{
+    color:#b5b5b5;
+}
+.hc_l_r .hc_sucess span i{
+    color:black;
+    font-style: normal;
+}

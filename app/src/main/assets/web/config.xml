@@ -1,0 +1,75 @@
+<widget id="A6001809635896" version="0.0.1">
+
+    <name>聚金贷</name>
+
+    <description>
+
+        Example For APICloud.
+
+    </description>
+
+    <author email="developer@apicloud.com" href="http://www.apicloud.com">
+
+        Developer
+
+    </author>
+
+    <content src="index.html"/>
+
+    <access origin="*"/>
+
+    <preference name="pageBounce" value="false"/>
+
+    <preference name="appBackground" value="rgba(0,0,0,0.0)"/>
+
+    <preference name="windowBackground" value="rgba(0,0,0,0.0)"/>
+
+    <preference name="frameBackgroundColor" value="rgba(0,0,0,0.0)"/>
+
+    <preference name="hScrollBarEnabled" value="false"/>
+
+    <preference name="vScrollBarEnabled" value="false"/>
+
+    <preference name="autoLaunch" value="true"/>
+
+    <preference name="fullScreen" value="false"/>
+
+    <preference name="autoUpdate" value="true"/>
+
+    <preference name="smartUpdate" value="true"/>
+
+    <preference name="debug" value="true"/>
+
+    <preference name="statusBarAppearance" value="false"/>
+
+    <permission name="readPhoneState"/>
+
+    <permission name="camera"/>
+
+    <permission name="record"/>
+
+    <permission name="location"/>
+
+    <permission name="fileSystem"/>
+
+    <permission name="internet"/>
+
+    <permission name="bootCompleted"/>
+
+    <permission name="hardware"/>
+
+<!-- 极光推送 -->
+    <feature name="ajpush">
+        <param name="app_key" value="1cab6cf0f603765250bd7ad5"/>
+        <param name="channel" value="test"/>
+    </feature>
+<!-- 极光推送 -->
+
+<!--shareinstall 开始
+    <preference name="urlScheme" value="fpgb9349" />
+    <feature name="shareInstall">
+        <param name="com.shareinstall.APP_KEY" value="KFBKK2HA67F66R"/>
+    </feature>
+   shareinstall 结束 -->
+
+</widget>

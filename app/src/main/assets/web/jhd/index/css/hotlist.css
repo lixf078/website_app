@@ -1,0 +1,172 @@
+.hotChoice{
+    overflow: hidden;
+    background:white;
+}
+.hotChoiceTitle{
+    width: 9.2rem;
+    line-height: 0.88rem;
+    font-size: 0.4533rem;
+    margin: 0 auto;
+    overflow: hidden;
+    border-bottom: 0.02rem solid #f2f2f2;
+}
+.hotChoiceTitle span{
+    float: left;
+}
+.hotChoiceTitle .allDai{
+    float: right;
+    font-size: 0.36rem;
+    color:#999999;
+}
+
+.hc_text h3{
+    color:black;
+}
+.skill{
+    color:black;
+}
+.hotChoiceContent{
+    width: 9.2rem;
+    margin:0 auto;
+    overflow: hidden;
+}
+.hotChoiceContent li{
+    height: 2.4267rem;
+    border-bottom: 0.02rem solid #f2f2f2;
+    font-size: 0.4533rem;
+}
+.hc_l_t_img img {
+    width: 0.9333rem;
+    display: block;
+}
+.hc_l_t_img {
+    display: block;
+    float: left;
+}
+
+.hc_l_t_text {
+    display: block;
+    float: left;
+}
+
+.hc_l_b {
+    margin-top: 0.2rem;
+    display: block;
+    font-size: 0.4rem;
+    float: left;
+}
+.hc_left {
+    width: 6rem;
+    float: left;
+}
+.hc_right{
+    width: 3rem;
+    float: left;
+}
+.hc_l_text2 {
+    font-size: 0.32rem;
+    display: block;
+    float: left;
+    color:#666666;
+    margin-top:0rem;
+}
+.hc_sucess {
+    font-size: 0.28rem;
+}
+.hc_l_t {
+    overflow: hidden;
+    margin-top: 0.3467rem;
+}
+.hc_l_r div{
+    width: 100%;
+    overflow: hidden;
+}
+.hc_l_r div span{
+    display: block;
+    float: right;
+}
+span.tab {
+    color: white;
+    font-size: 0.3rem;
+    display: block;
+    padding: 0.030rem 0.08rem;
+    float: left;
+    margin:0.05rem;
+    border-radius: 0.05rem;
+    padding-bottom: 0;
+    text-align: center;
+    margin-top: 0;
+}
+.new.tab{
+    background:#ff8c4c;
+}
+.fast.tab{
+    background:linear-gradient(45deg,#b247f1,#8d84f3);
+    background: -webkit-linear-gradient(45deg,#b247f1,#8d84f3);/* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(45deg,#b247f1,#8d84f3); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(45deg,#b247f1,#8d84f3); /* Firefox 3.6 - 15 */
+}
+.heigh.tab{
+    background:linear-gradient(45deg,#b247f1,#8d84f3);
+    background: -webkit-linear-gradient(45deg,#b247f1,#8d84f3);/* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(45deg,#b247f1,#8d84f3); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(45deg,#b247f1,#8d84f3); /* Firefox 3.6 - 15 */
+}
+.hot.tab{
+    background:linear-gradient(45deg,#ff5580,#f8867b);
+    background: -webkit-linear-gradient(45deg,#ff5580,#f8867b);/* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(45deg,#ff5580,#f8867b); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(45de，g#ff5580,#f8867b); /* Firefox 3.6 - 15 */
+}
+.hc_l_t_text .hc_text{
+    display: block;
+    font-size: 0.4267rem;
+    float: left;
+    margin-right: 0.2rem;
+}
+.hc_l_t_text div{
+    padding-left: 0.2rem;
+    line-height: 0.4667rem;
+    margin-top: 0.05rem;
+}
+.hc_l_t_text .hc_text h3{
+    font-size: 0.4333rem;
+    display: block;
+}
+.hc_l_b span{
+    display: block;
+    float: left;
+}
+.hc_l_b h4{
+    display: block;
+
+}
+.hc_l_b .days{
+    margin-left: 1rem;
+    color:#474747;
+}
+.hc_l_b .days h4{
+    font-size: 0.4267rem;
+    color:#474747;
+}
+.hc_l_r .hc_l_r_btn span{
+    width: 1.6333rem;
+    height: 0.667rem;
+    border-radius: 1rem;
+    line-height: 0.667rem;
+    text-align: center;
+    margin-top: 0.36rem;
+    border: 0.02rem solid #3ca2f6;
+    color: #3ca2f6;
+    font-size: 0.4rem;
+}
+.hc_l_r .hc_sucess{
+    margin-top: 0.67rem;
+}
+.hc_l_r .hc_sucess span{
+    color:#b5b5b5;
+}
+.hc_l_r .hc_sucess span i{
+    color:black;
+    font-style: normal;
+}
