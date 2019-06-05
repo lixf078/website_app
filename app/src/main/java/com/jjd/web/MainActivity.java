@@ -1,10 +1,18 @@
 package com.jjd.web;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+import android.webkit.DownloadListener;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
+
+import com.jjd.web.service.DownloadApkService;
+
+import java.io.Serializable;
 
 public class MainActivity extends Activity {
 
@@ -14,7 +22,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mWebView = findViewById(R.id.m_webview);
+        mWebView = (WebView) findViewById(R.id.m_webview);
         WebSettings webSettings = mWebView.getSettings();
         //如果访问的页面中要与Javascript交互，则webview必须设置支持Javascript
         webSettings.setJavaScriptEnabled(true);
@@ -65,8 +73,26 @@ public class MainActivity extends Activity {
         String appCachePath = getApplication().getCacheDir().getAbsolutePath();
         webSettings.setAppCachePath(appCachePath);
         webSettings.setDatabaseEnabled(true);
-
-        mWebView.loadUrl("file:///android_asset/web/jhd/main.html");
+        mWebView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                Log.e("lxf", "shouldOverrideUrlLoading url " + url);
+                return false;
+            }
+        });
+        mWebView.setDownloadListener(new DownloadListener() {
+            @Override
+            public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
+                Log.e("lxf", "onDownloadStart url " + url + ", contentDisposition " + contentDisposition);
+                DownLoadModel data = new DownLoadModel();
+                data.setTitle(contentDisposition);
+                data.setUrl(url);
+                data.setVersion("1.1");
+                data.setVersionCode("1.2");
+                MainActivity.this.startService(new Intent(MainActivity.this, DownloadApkService.class).putExtra("data", (Serializable) data));
+            }
+        });
+        mWebView.loadUrl("file:///android_asset/web/index.html");
 //        mWebView.loadUrl("file:///android_asset/web/jhd/index/html/main.html");
     }
 }

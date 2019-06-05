@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">LibNetwrok</string>
+    <string name="parse_data_err">数据解析错误</string>
+
+    <string name="toast_network_disconnect">当前网络不可用，请检查网络设置</string>
+
+    <string name="notification_ticker_new_msg">您有一条新的消息</string>
+    <string name="notification_ticker_app_download">开始下载</string>
+    <string name="notification_apk_download_extend">版本下载</string>
+    <string name="notification_apk_download_complete">下载完成，点击安装</string>
+</resources>
