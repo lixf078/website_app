@@ -12,6 +12,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
 import android.util.Log;
+import android.view.View;
 import android.webkit.DownloadListener;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
@@ -30,18 +31,42 @@ import com.jjd.web.view.RegSuccessDialog;
 import java.io.Serializable;
 import java.text.NumberFormat;
 
-public class MainActivity extends Activity  implements IDownloadListener {
+public class CustomerWebActivity extends Activity  implements IDownloadListener {
 
     WebView mWebView = null;
+
+    View topView = null;
+    TextView web_view_top_layout_title;
+    String title = "";
+    String url = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        mWebView = (WebView) findViewById(R.id.m_webview);
+        setContentView(R.layout.activity_customer_view);
+        mWebView = (WebView) findViewById(R.id.m_customer_webview);
+
         mWebView.clearHistory();
         mWebView.clearCache(true);
         mWebView.clearFormData();
+
+        topView = findViewById(R.id.web_view_top_layout);
+        web_view_top_layout_title = (TextView) findViewById(R.id.web_view_top_layout_title);
+
+        url = getIntent().getStringExtra("jumpCustomerUrl");
+        title = getIntent().getStringExtra("jumpCustomerTitle");
+        web_view_top_layout_title.setText(title);
+
+        findViewById(R.id.web_view_top_layout_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (canGoBack()){
+                    goBack();
+                }else {
+                    finish();
+                }
+            }
+        });
 
         WebSettings webSettings = mWebView.getSettings();
         //如果访问的页面中要与Javascript交互，则webview必须设置支持Javascript
@@ -97,12 +122,18 @@ public class MainActivity extends Activity  implements IDownloadListener {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 Log.e("lxf", "shouldOverrideUrlLoading url " + url);
+                if (url.startsWith("http")){
+                    topView.setVisibility(View.VISIBLE);
+                }else {
+                    topView.setVisibility(View.GONE);
+                }
                 return false;
             }
         });
         mWebView.setDownloadListener(new DownloadListener() {
             @Override
             public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
+                Log.e("lxf", "onDownloadStart url " + url + ", contentDisposition " + contentDisposition);
                 if (DownloadApkService.getState() == 0){
                     Log.e("lxf", "onDownloadStart url " + url + ", contentDisposition " + contentDisposition);
                     DownLoadModel data = new DownLoadModel();
@@ -110,11 +141,11 @@ public class MainActivity extends Activity  implements IDownloadListener {
                     data.setUrl(url);
                     data.setVersion("1.1");
                     data.setVersionCode("1.2");
-                    Intent intent = new Intent(MainActivity.this, DownloadApkService.class).putExtra("data", (Serializable) data);
-                    MainActivity.this.startService(intent);
+                    Intent intent = new Intent(CustomerWebActivity.this, DownloadApkService.class).putExtra("data", (Serializable) data);
+                    CustomerWebActivity.this.startService(intent);
                     showProgressDialog();
                 }else {
-                    Toast.makeText(MainActivity.this, "当前正在下载，请稍后再试", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CustomerWebActivity.this, "当前正在下载，请稍后再试", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -133,15 +164,14 @@ public class MainActivity extends Activity  implements IDownloadListener {
 
         JJDJavaScriptInterface JSInterface = new JJDJavaScriptInterface(this); ////------
         mWebView.addJavascriptInterface(JSInterface, "JSInterface"); // 设置js接口  第一个参数事件接口实例，第二个是实例在js中的别名，这个在js中会用到
-        mWebView.loadUrl("file:///android_asset/web/index.html?start_time=" + System.currentTimeMillis());
-//        mWebView.loadUrl("file:///android_asset/web/jhd/index/html/main.html");
+//        mWebView.loadUrl("file:///android_asset/web/index.html?start_time=" + System.currentTimeMillis());
+        mWebView.loadUrl(url);
         DownloadApkService.setDownloadListener(this);
     }
 
     @Override
     public void onBackPressed() {
         if (canGoBack()){
-            mWebView.clearCache(true);
             goBack();
         }else {
             finish();
@@ -161,7 +191,9 @@ public class MainActivity extends Activity  implements IDownloadListener {
      * 后退
      */
     protected void goBack() {
+        Log.e("lxf", "1 goBack " + mWebView.getUrl());
         mWebView.goBack();
+        Log.e("lxf", "2 goBack " + mWebView.getUrl());
     }
 
     public class JJDJavaScriptInterface {
@@ -177,15 +209,9 @@ public class MainActivity extends Activity  implements IDownloadListener {
 
         @JavascriptInterface
         public void jumpCustomerUrl(String url, String title){
-            Log.e("lxf", "jumpCustomerUrl url " + url + ",title " + title);
-            Intent intent = new Intent(MainActivity.this, CustomerWebActivity.class);
-            intent.putExtra("jumpCustomerUrl", url);
-            intent.putExtra("jumpCustomerTitle", title);
-            startActivity(intent);
+            Log.e("lxf", "jumpUrl url " + url + ",title " + title);
         }
     }
-
-
 
     private void initFormats() {
         mProgressNumberFormat = "%1d/%2d";
@@ -195,14 +221,14 @@ public class MainActivity extends Activity  implements IDownloadListener {
 
     @SuppressLint("HandlerLeak")
     public void showProgressDialog() {
-        Log.e("lxf", "MainActivity showProgressDialog url " + dialog);
+        Log.e("lxf", "CustomerWebActivity showProgressDialog url " + dialog);
         if (dialog != null){
             if (dialog.isShowing()){
                 dialog.dismiss();
             }
             dialog = null;
         }
-        dialog = new RegSuccessDialog(MainActivity.this);
+        dialog = new RegSuccessDialog(CustomerWebActivity.this);
         dialog.setListener(new DialogEx.OnDialogListener() {
             @Override
             public void callback(Object... params) {
@@ -220,9 +246,9 @@ public class MainActivity extends Activity  implements IDownloadListener {
         progress_percent = dialog.findView(R.id.progress_number);
         progress_number = dialog.findView(R.id.progress_percent);
         initFormats();
-
         updateProgressView();
     }
+
 
     @SuppressLint("HandlerLeak")
     private void updateProgressView() {
@@ -265,7 +291,7 @@ public class MainActivity extends Activity  implements IDownloadListener {
 
     @Override
     public void onDownloadProgress(int progress, int totalSize) {
-        Log.e("lxf", "MainActivity onDownloadProgress progress " + progress);
+        Log.e("lxf", "CustomerWebActivity onDownloadProgress progress " + progress);
         try{
             if (dialog.isShowing()){
                 progressBar.setProgress(progress);
@@ -274,12 +300,12 @@ public class MainActivity extends Activity  implements IDownloadListener {
                     dialog.dismiss();
                 }
                 if (progress == -1){
-                    Toast.makeText(MainActivity.this, "下载失败，请稍后重试", Toast.LENGTH_LONG);
+                    Toast.makeText(CustomerWebActivity.this, "下载失败，请稍后重试", Toast.LENGTH_LONG);
                     dialog.dismiss();
                 }
             }
-        }catch (Exception e){}
+        }catch (Exception e){
 
+        }
     }
-
 }

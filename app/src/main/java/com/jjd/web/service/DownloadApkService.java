@@ -5,8 +5,10 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.os.ResultReceiver;
 import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
@@ -36,13 +38,17 @@ public class DownloadApkService extends BaseService {
    // http://downloadpkg.apicloud.com/app/download?path=http://A6001809635896.qiniucdn.apicloud-system.com/25a75139aa3e1869b79da5fa150e8a49_d
     // http://A6001809635896.qiniucdn.apicloud-system.com/25a75139aa3e1869b79da5fa150e8a49_d
     private static final long KRefreshDelay = MilliUtil.second(1);
-
     private Notification mNotification;
-
     private DownLoadModel mApk;
 
     private Handler mHandler;
+    private Handler mActivityHandler;
+
     private int mProgress;
+
+    static IDownloadListener iDownloadListener;
+
+    private static int state = 0;
 
     public static Intent getFileIntent(File file) {
         Uri uri = Uri.fromFile(file);
@@ -85,13 +91,30 @@ public class DownloadApkService extends BaseService {
         if (fileIntent != null){
             startActivity(fileIntent);
         }
+        if (iDownloadListener != null){
+//                    Bundle resultData = new Bundle();
+//                    resultData.putInt("progress" ,mProgress);
+//                    receiver.send(UPDATE_PROGRESS, resultData);
+            iDownloadListener.onDownloadProgress(100, 100);
+        }
+        Log.e("lxf", "onNetworkSuccess state "  + state);
+        state = 0;
         stopSelf();
     }
 
     @Override
     public void onNetworkError(int id, NetError error) {
         super.onNetworkError(id, error);
+        cancelAllNetworkRequest();
         NotificationUtil.cancel(getApplicationContext(), NotificationId.app_download);
+        if (iDownloadListener != null){
+//                    Bundle resultData = new Bundle();
+//                    resultData.putInt("progress" ,mProgress);
+//                    receiver.send(UPDATE_PROGRESS, resultData);
+            iDownloadListener.onDownloadProgress(-1, 100);
+        }
+        Log.e("lxf", "onNetworkError state "  + state);
+        state = 0;
         stopSelf();
     }
 
@@ -103,6 +126,9 @@ public class DownloadApkService extends BaseService {
             mHandler.removeMessages(0);
         }
         mHandler = null;
+        iDownloadListener = null;
+        Log.e("lxf", "onDestroy state "  + state);
+        state = 0;
     }
 
     private Intent webLauncher(String downloadUrl){
@@ -117,10 +143,13 @@ public class DownloadApkService extends BaseService {
     Intent fileIntent = null;
     @Override
     protected void onHandleIntent(Intent intent) {
-
+        Log.e("lxf", "onHandleIntent state "  + state);
+        if (state == 1){
+            return;
+        }
+        cancelAllNetworkRequest();
         mApk = (DownLoadModel) intent.getSerializableExtra("data");
         String fileName = mApk.getTitle() + ".apk";
-
 
         if(Build.VERSION.SDK_INT >= 24) {//判读版本是否在7.0以上
             try {
@@ -161,6 +190,8 @@ public class DownloadApkService extends BaseService {
                 getResources().getString(R.string.notification_ticker_app_download)
         ));
         exeNetworkRequest(0, NetFactory.downloadFile(mApk.getUrl(), tempFile.getParent(), fileName));
+//        exeNetworkRequest(0, NetFactory.downloadFile("http://A6001809635896.qiniucdn.apicloud-system.com/25a75139aa3e1869b79da5fa150e8a49_d", tempFile.getParent(), fileName));
+        //http://A6001809635896.qiniucdn.apicloud-system.com/25a75139aa3e1869b79da5fa150e8a49_d
 
         mHandler = new Handler() {
 
@@ -173,11 +204,18 @@ public class DownloadApkService extends BaseService {
                 NotificationUtil.launch(getApplicationContext(), NotificationId.app_download, mNotification);
 
                 sendEmptyMessageDelayed(0, KRefreshDelay);
+
+                if (iDownloadListener != null){
+//                    Bundle resultData = new Bundle();
+//                    resultData.putInt("progress" ,mProgress);
+//                    receiver.send(UPDATE_PROGRESS, resultData);
+                    iDownloadListener.onDownloadProgress(mProgress, 100);
+                }
             }
         };
 
         mHandler.sendEmptyMessageDelayed(0, KRefreshDelay);
-
+        state = 1;
     }
 
     public Intent getIntent(File tempFile2){
@@ -197,7 +235,6 @@ public class DownloadApkService extends BaseService {
     public void installApk(File tempFile){
         Uri apkUri =
                 getUriForFile(getApplicationContext(), "com.jjd.web.fileprovider", tempFile);
-
         Intent tempIntent = new Intent(Intent.ACTION_VIEW);
         // 由于没有在Activity环境下启动Activity,设置下面的标签
         tempIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -205,5 +242,14 @@ public class DownloadApkService extends BaseService {
         tempIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         tempIntent.setDataAndType(apkUri, "application/vnd.android.package-archive");
         startActivity(tempIntent);
+    }
+
+    public static void setDownloadListener(IDownloadListener downloadListener) {
+        iDownloadListener = downloadListener;
+    }
+
+    public static int getState(){
+        Log.e("lxf", "getState state "  + state);
+        return state;
     }
 }

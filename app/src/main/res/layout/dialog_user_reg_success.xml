@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_white_corner"
+    android:paddingRight="20dp"
+    android:paddingLeft="20dp"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+    <ImageView
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/ic_reg_success_bg" />
+    <LinearLayout
+        android:id="@+id/top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/bg_transport_corner">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:visibility="invisible"
+                android:id="@+id/ic_reg_success_bg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/ic_reg_success_bg" />
+
+            <ImageView
+                android:id="@+id/ic_reg_success_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@mipmap/ic_download_progress" />
+
+            <TextView
+                android:visibility="invisible"
+                android:id="@+id/ic_reg_success_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/ic_reg_success_bg"
+                android:background="#b3d2fa"
+                android:gravity="center_horizontal"
+                android:padding="10dp"
+                android:text="恭喜您成为优投会员"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/dialog_sample_tv_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="23dp"
+                android:layout_marginRight="23dp"
+                android:gravity="center_horizontal"
+                android:text="App下载中，请耐心等待"
+                android:textColor="#333333"
+                android:textSize="14sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ProgressBar
+                    android:id="@+id/progress_bar"
+                    style="@style/MyProgressBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="1dp"
+                    android:layout_marginEnd="25dp"
+                    android:progress="1"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="12dp"/>
+
+                <TextView
+                    android:id="@+id/progress_percent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@id/progress_bar"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginStart="25dp"
+                    android:paddingBottom="12dp"/>
+
+                <TextView
+                    android:id="@+id/progress_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/progress_bar"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginStart="25dp"
+                    android:paddingBottom="12dp"/>
+
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/top_layout"
+        android:gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dialog_confirm"
+        android:layout_marginBottom="14dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="30dp"
+        android:drawableTop="@mipmap/ic_close" />
+
+</RelativeLayout>
