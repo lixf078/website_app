@@ -131,7 +131,8 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':LibNetwrok')
     compile project(path: ':LibNetwrok')
-
+    compile  'com.umeng.umsdk:analytics:8.0.0'
+    compile  'com.umeng.umsdk:common:2.0.0'
     compile 'com.android.support:support-v4:25+'
 //    compile 'com.tencent.bugly:crashreport:latest.release'
     //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.2.0

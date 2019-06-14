@@ -3,7 +3,12 @@ package cn.jubao360.jhdapp.wmd0;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
+
+import com.umeng.commonsdk.UMConfigure;
 
 import cn.jpush.android.api.JPushInterface;
 
@@ -24,6 +29,9 @@ public class App extends AppParent {
         hasShowNav = -1;
         // bugly
         initAliPush(this);
+        String channel = getChannel();
+        UMConfigure.setLogEnabled(true);
+        UMConfigure.init(getContext(), "5d0355c30cafb22ee70005c6", channel, UMConfigure.DEVICE_TYPE_PHONE, "");
     }
 
     @Override
@@ -84,8 +92,6 @@ public class App extends AppParent {
         public void onActivityDestroyed(Activity activity) {
         }
     };
-
-
 
     public interface MsgDisplayListener {
         void handle(String msg);
@@ -166,5 +172,24 @@ public class App extends AppParent {
 //            //最后在notificationmanager中创建该通知渠道
 //            mNotificationManager.createNotificationChannel(mChannel);
 //        }
+    }
+
+    private String getChannel() {
+        String channel = "yyb";
+        try {
+            ApplicationInfo appInfo = this.getPackageManager()
+                    .getApplicationInfo(getPackageName(),
+                            PackageManager.GET_META_DATA);
+            Object obj = appInfo.metaData.get("app_channel_key");
+            if (obj instanceof Integer) {
+                channel = (String.valueOf((Integer) obj));
+            } else {
+                channel = appInfo.metaData.getString("app_channel_key");
+            }
+            Log.e("lxf", "getChannel channel " + channel);
+        } catch (Exception e) {
+
+        }
+        return channel;
     }
 }
