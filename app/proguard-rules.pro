@@ -153,3 +153,17 @@ native <methods>;
 -dontwarn com.alibaba.**
 -dontwarn com.ta.**
 -dontwarn com.ut.**
+
+-keep class com.umeng.** {*;}
+
+-keepclassmembers class * {
+   public <init> (org.json.JSONObject);
+}
+
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+-keep public class cn.jubao360.jhdapp.wmd0.R$*{
+public static final int *;
+}

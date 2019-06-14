@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 
 import cn.jpush.android.api.JPushInterface;
@@ -31,7 +32,8 @@ public class App extends AppParent {
         initAliPush(this);
         String channel = getChannel();
         UMConfigure.setLogEnabled(true);
-        UMConfigure.init(getContext(), "5d0355c30cafb22ee70005c6", channel, UMConfigure.DEVICE_TYPE_PHONE, "");
+        UMConfigure.init(getContext(), "5d0355c30cafb22ee70005c6", channel, UMConfigure.DEVICE_TYPE_PHONE, null);
+        MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
     }
 
     @Override

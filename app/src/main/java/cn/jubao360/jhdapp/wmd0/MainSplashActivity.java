@@ -7,6 +7,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 
+import com.umeng.analytics.MobclickAgent;
+
 import java.util.Random;
 
 import cn.jpush.android.api.JPushInterface;
@@ -15,7 +17,7 @@ import cn.jpush.android.api.JPushInterface;
  * Created by lc on 2017/4/23.
  */
 
-public class MainSplashActivity extends Activity {
+public class MainSplashActivity extends BaseActivity {
 
     private static final int KCodeCamera = 101;
 
@@ -49,6 +51,7 @@ public class MainSplashActivity extends Activity {
     protected void onResume() {
         super.onResume();
         mHandler.sendEmptyMessageDelayed(2, 2000);
+        MobclickAgent.onResume(this);
     }
 //
 //    @Override
@@ -66,6 +69,13 @@ public class MainSplashActivity extends Activity {
 //
 //        }
 //    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
 
     @Override
     protected void onDestroy() {

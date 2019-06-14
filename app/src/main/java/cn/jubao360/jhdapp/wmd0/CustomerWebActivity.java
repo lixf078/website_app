@@ -21,6 +21,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.umeng.analytics.MobclickAgent;
+
 import java.text.NumberFormat;
 
 import cn.jubao360.jhdapp.wmd0.service.DownloadApkService;
@@ -147,6 +149,18 @@ public class CustomerWebActivity extends BaseActivity implements IDownloadListen
 //        mWebView.loadUrl("file:///android_asset/web/index.html?start_time=" + System.currentTimeMillis());
         mWebView.loadUrl(url);
         DownloadApkService.setDownloadListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     @Override

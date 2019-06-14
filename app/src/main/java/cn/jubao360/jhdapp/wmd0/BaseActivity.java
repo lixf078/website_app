@@ -9,6 +9,8 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.umeng.analytics.MobclickAgent;
+
 import java.io.Serializable;
 
 import cn.jubao360.jhdapp.wmd0.service.DownloadApkService;

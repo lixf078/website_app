@@ -29,6 +29,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.umeng.analytics.MobclickAgent;
+
 import java.text.NumberFormat;
 import java.util.Random;
 
@@ -174,6 +176,13 @@ public class MainActivity extends BaseActivity implements IDownloadListener {
     protected void onResume() {
         super.onResume();
         Log.e("lxf", "onResume");
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     /**

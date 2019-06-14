@@ -30,6 +30,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.umeng.analytics.MobclickAgent;
+
 import cn.jubao360.jhdapp.wmd0.service.DownloadApkService;
 import cn.jubao360.jhdapp.wmd0.service.IDownloadListener;
 import cn.jubao360.jhdapp.wmd0.view.DialogEx;
@@ -64,6 +66,17 @@ public class TestActivity extends Activity implements IDownloadListener{
         DownloadApkService.setDownloadListener(this);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
 
     private void initFormats() {
         mProgressNumberFormat = "%1d/%2d";
