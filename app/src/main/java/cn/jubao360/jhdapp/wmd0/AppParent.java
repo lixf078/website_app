@@ -31,7 +31,5 @@ abstract public class AppParent extends AppEx {
     @Override
     protected void setParams() {
 
-        Resources resources = getResources();
-        Configuration config = resources.getConfiguration();
     }
 }

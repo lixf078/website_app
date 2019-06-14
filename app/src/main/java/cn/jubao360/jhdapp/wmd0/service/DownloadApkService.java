@@ -2,6 +2,7 @@ package cn.jubao360.jhdapp.wmd0.service;
 
 import android.app.Notification;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -9,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.FileProvider;
 import android.support.v4.os.ResultReceiver;
 import android.util.Log;
 import android.view.View;
@@ -79,7 +81,7 @@ public class DownloadApkService extends BaseService {
 
     @Override
     public void onNetworkProgress(int id, float progress, long totalSize) {
-        Log.d(TAG, "onNetworkProgress() progress = " + progress);
+//        Log.d(TAG, "onNetworkProgress() progress = " + progress);
         mProgress = (int) progress;
     }
 
@@ -123,7 +125,7 @@ public class DownloadApkService extends BaseService {
 //                    receiver.send(UPDATE_PROGRESS, resultData);
             iDownloadListener.onDownloadProgress(-1, 100);
         }
-        Log.e("lxf", "onNetworkError state "  + state);
+        Log.e("lxf", "onNetworkError state "  + state + ", error " + error.getCode() + ", msg " + error.getMessage());
         state = 0;
         stopSelf();
     }
@@ -230,28 +232,14 @@ public class DownloadApkService extends BaseService {
 
     public Intent getIntent(File tempFile2){
         Uri apkUri = null;
-
         apkUri = getUriForFile(getApplicationContext(), "cn.jubao360.jhdapp.wmd0.fileprovider", tempFile2);
-
         Intent tempIntent = new Intent(Intent.ACTION_VIEW);
+        tempIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         // 由于没有在Activity环境下启动Activity,设置下面的标签
-        tempIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         //添加这一句表示对目标应用临时授权该Uri所代表的文件
         tempIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         tempIntent.setDataAndType(apkUri, "application/vnd.android.package-archive");
         return tempIntent;
-    }
-
-    public void installApk(File tempFile){
-        Uri apkUri =
-                getUriForFile(getApplicationContext(), "cn.jubao360.jhdapp.wmd0.fileprovider", tempFile);
-        Intent tempIntent = new Intent(Intent.ACTION_VIEW);
-        // 由于没有在Activity环境下启动Activity,设置下面的标签
-        tempIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        //添加这一句表示对目标应用临时授权该Uri所代表的文件
-        tempIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        tempIntent.setDataAndType(apkUri, "application/vnd.android.package-archive");
-        startActivity(tempIntent);
     }
 
     public static void setDownloadListener(IDownloadListener downloadListener) {
@@ -262,4 +250,5 @@ public class DownloadApkService extends BaseService {
         Log.e("lxf", "getState state "  + state);
         return state;
     }
+
 }

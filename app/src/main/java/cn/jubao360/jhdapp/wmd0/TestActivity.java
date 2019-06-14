@@ -57,7 +57,7 @@ public class TestActivity extends Activity implements IDownloadListener{
                Intent intent = new Intent(TestActivity.this, DownloadApkService.class).putExtra("data", (Serializable) data);
 //               intent.putExtra("receiver", new TestActivity.DownloadReceiver(new Handler()));
                TestActivity.this.startService(intent);
-               showProgressDialog();
+//               showProgressDialog();
            }
        });
 
@@ -116,7 +116,6 @@ public class TestActivity extends Activity implements IDownloadListener{
         updateProgressView();
     }
 
-
     @SuppressLint("HandlerLeak")
     private void updateProgressView() {
         final String format = mProgressNumberFormat;
@@ -158,7 +157,7 @@ public class TestActivity extends Activity implements IDownloadListener{
 
     @Override
     public void onDownloadProgress(int progress, int totalSize) {
-        if (dialog.isShowing()){
+        if (dialog != null && dialog.isShowing()){
             progressBar.setProgress(progress);
             handler.sendEmptyMessage(0);
             if (progress == 100) {

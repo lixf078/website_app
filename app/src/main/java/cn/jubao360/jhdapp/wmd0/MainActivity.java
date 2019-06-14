@@ -1,23 +1,22 @@
 package cn.jubao360.jhdapp.wmd0;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.ServiceInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
+import android.support.v4.content.ContextCompat;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
 import android.util.Log;
-import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
 import android.webkit.DownloadListener;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
@@ -30,17 +29,16 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.NumberFormat;
+import java.util.Random;
+
 import cn.jpush.android.api.JPushInterface;
 import cn.jubao360.jhdapp.wmd0.service.DownloadApkService;
 import cn.jubao360.jhdapp.wmd0.service.IDownloadListener;
 import cn.jubao360.jhdapp.wmd0.view.DialogEx;
 import cn.jubao360.jhdapp.wmd0.view.RegSuccessDialog;
 
-import java.io.Serializable;
-import java.text.NumberFormat;
-import java.util.Random;
-
-public class MainActivity extends Activity  implements IDownloadListener {
+public class MainActivity extends BaseActivity implements IDownloadListener {
 
     WebView mWebView = null;
 
@@ -103,7 +101,7 @@ public class MainActivity extends Activity  implements IDownloadListener {
         String appCachePath = getApplication().getCacheDir().getAbsolutePath();
         webSettings.setAppCachePath(appCachePath);
         webSettings.setDatabaseEnabled(true);
-        String dir=this.getApplicationContext().getDir("password", Context.MODE_PRIVATE).getPath();
+        String dir = this.getApplicationContext().getDir("password", Context.MODE_PRIVATE).getPath();
         webSettings.setDatabasePath(dir);
         webSettings.setGeolocationDatabasePath(dir);
         mWebView.setWebViewClient(new WebViewClient() {
@@ -117,68 +115,65 @@ public class MainActivity extends Activity  implements IDownloadListener {
             @Override
             public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
                 Log.e("lxf", "onDownloadStart url " + url + ", contentDisposition " + contentDisposition);
-                if (DownloadApkService.getState() == 0){
-                    DownLoadModel data = new DownLoadModel();
-                    data.setTitle(contentDisposition);
-                    data.setUrl(url);
-                    data.setVersion("1.0");
-                    data.setVersionCode("10");
-                    Intent intent = new Intent(MainActivity.this, DownloadApkService.class).putExtra("data", (Serializable) data);
-                    MainActivity.this.startService(intent);
-                    showProgressDialog();
-                }else {
-                    Toast.makeText(MainActivity.this, "当前正在下载，请稍后再试", Toast.LENGTH_SHORT).show();
-                }
+                downloadApk(url, contentDisposition);
             }
         });
 
         mWebView.setWebChromeClient(new WebChromeClient() {
 
-                                        @Override
-                                        public void onProgressChanged(WebView view, int newProgress) {
-                                        }
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+            }
 
-                                        @Override
-                                        public void onReceivedTitle(WebView view, String title) {
-                                            super.onReceivedTitle(view, title);
-                                        }
+            @Override
+            public void onReceivedTitle(WebView view, String title) {
+                super.onReceivedTitle(view, title);
+            }
 
-                                        @Override
-                                        public boolean onJsAlert(WebView view, String url, String message,
-                                                                 JsResult result) {
-                                            // TODO Auto-generated method stub
-                                            return super.onJsAlert(view, url, message, result);
-                                        }
-                                        @Override
-                                        public void onExceededDatabaseQuota(String url,
-                                            String databaseIdentifier, long quota,
-                                            long estimatedDatabaseSize, long totalQuota,
-                                            WebStorage.QuotaUpdater quotaUpdater) {
-                                                    // TODO Auto-generated method stub
-                                                    quotaUpdater.updateQuota(estimatedDatabaseSize*2);
-                                        }
+            @Override
+            public boolean onJsAlert(WebView view, String url, String message,
+                                     JsResult result) {
+                // TODO Auto-generated method stub
+                return super.onJsAlert(view, url, message, result);
+            }
+
+            @Override
+            public void onExceededDatabaseQuota(String url,
+                                                String databaseIdentifier, long quota,
+                                                long estimatedDatabaseSize, long totalQuota,
+                                                WebStorage.QuotaUpdater quotaUpdater) {
+                // TODO Auto-generated method stub
+                quotaUpdater.updateQuota(estimatedDatabaseSize * 2);
+            }
         });
 
         JJDJavaScriptInterface JSInterface = new JJDJavaScriptInterface(this); ////------
         mWebView.addJavascriptInterface(JSInterface, "JSInterface"); // 设置js接口  第一个参数事件接口实例，第二个是实例在js中的别名，这个在js中会用到
         String channel = getChannel();
-        mWebView.loadUrl("file:///android_asset/web/index.html?start_time=" + System.currentTimeMillis() + "&mid="+ channel);
-//        mWebView.loadUrl("file:///android_asset/web/jhd/index/html/main.html");
+        mWebView.loadUrl("file:///android_asset/web/index.html?start_time=" + System.currentTimeMillis() + "&mid=" + channel);
         DownloadApkService.setDownloadListener(this);
 
         JPushInterface.init(this);            // 初始化 JPush
         Random random = new Random();
         JPushInterface.setAlias(MainActivity.this, random.nextInt(), "12035");
+
+//        requestPermission();
     }
 
     @Override
     public void onBackPressed() {
-        if (canGoBack()){
+        if (canGoBack()) {
             mWebView.clearCache(true);
             goBack();
-        }else {
+        } else {
             finish();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e("lxf", "onResume");
     }
 
     /**
@@ -199,17 +194,18 @@ public class MainActivity extends Activity  implements IDownloadListener {
 
     public class JJDJavaScriptInterface {
         Context mContext;
+
         JJDJavaScriptInterface(Context c) {
             mContext = c;
         }
 
         @JavascriptInterface
-        public void jsAction(String action){
+        public void jsAction(String action) {
             Log.e("lxf", "jsAction url " + action);
         }
 
         @JavascriptInterface
-        public void jumpCustomerUrl(String url, String title){
+        public void jumpCustomerUrl(String url, String title) {
             Log.e("lxf", "jumpCustomerUrl url " + url + ",title " + title);
             Intent intent = new Intent(MainActivity.this, CustomerWebActivity.class);
             intent.putExtra("jumpCustomerUrl", url);
@@ -218,19 +214,12 @@ public class MainActivity extends Activity  implements IDownloadListener {
         }
     }
 
-
-
-    private void initFormats() {
-        mProgressNumberFormat = "%1d/%2d";
-        mProgressPercentFormat = NumberFormat.getPercentInstance();
-        mProgressPercentFormat.setMaximumFractionDigits(0);
-    }
-
+    @Override
     @SuppressLint("HandlerLeak")
     public void showProgressDialog() {
         Log.e("lxf", "MainActivity showProgressDialog url " + dialog);
-        if (dialog != null){
-            if (dialog.isShowing()){
+        if (dialog != null) {
+            if (dialog.isShowing()) {
                 dialog.dismiss();
             }
             dialog = null;
@@ -239,10 +228,10 @@ public class MainActivity extends Activity  implements IDownloadListener {
         dialog.setListener(new DialogEx.OnDialogListener() {
             @Override
             public void callback(Object... params) {
-                int event = (int)params[0];
-                if (event == 1){
+                int event = (int) params[0];
+                if (event == 1) {
                     // confirm
-                }else{
+                } else {
                 }
             }
         });
@@ -255,6 +244,12 @@ public class MainActivity extends Activity  implements IDownloadListener {
         initFormats();
 
         updateProgressView();
+    }
+
+    private void initFormats() {
+        mProgressNumberFormat = "%1d/%2d";
+        mProgressPercentFormat = NumberFormat.getPercentInstance();
+        mProgressPercentFormat.setMaximumFractionDigits(0);
     }
 
     @SuppressLint("HandlerLeak")
@@ -299,39 +294,69 @@ public class MainActivity extends Activity  implements IDownloadListener {
     @Override
     public void onDownloadProgress(int progress, int totalSize) {
         Log.e("lxf", "MainActivity onDownloadProgress progress " + progress);
-        try{
-            if (dialog.isShowing()){
+        try {
+            if (dialog.isShowing()) {
                 progressBar.setProgress(progress);
                 handler.sendEmptyMessage(0);
                 if (progress == 100) {
                     dialog.dismiss();
                 }
-                if (progress == -1){
+                if (progress == -1) {
                     Toast.makeText(MainActivity.this, "下载失败，请稍后重试", Toast.LENGTH_LONG);
                     dialog.dismiss();
                 }
             }
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
 
     }
 
-    private String getChannel(){
+    private String getChannel() {
         String channel = "yyb";
-        try{
+        try {
             ApplicationInfo appInfo = this.getPackageManager()
                     .getApplicationInfo(getPackageName(),
                             PackageManager.GET_META_DATA);
             Object obj = appInfo.metaData.get("app_channel_key");
-            if (obj instanceof Integer){
-                channel = (String.valueOf((Integer)obj));
-            }else {
+            if (obj instanceof Integer) {
+                channel = (String.valueOf((Integer) obj));
+            } else {
                 channel = appInfo.metaData.getString("app_channel_key");
             }
             Log.e("lxf", "getChannel channel " + channel);
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
         return channel;
     }
+
+    private void requestPermission() {
+        Log.e("lxf", "requestPermission " + ContextCompat.checkSelfPermission(this, Manifest.permission.REQUEST_INSTALL_PACKAGES));
+        // Here, thisActivity is the current activity
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.REQUEST_INSTALL_PACKAGES)
+                != PackageManager.PERMISSION_GRANTED) {
+
+           /* Uri packageURI = Uri.parse("package:" + MainActivity.this.getPackageName());
+            Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, packageURI);
+            startActivityForResult(intent, INSTALL_PERMISS_CODE);*/
+
+        } else {
+            Toast.makeText(MainActivity.this, "请您在设置中打开应用内安装权限4", Toast.LENGTH_LONG).show();
+        }
+    }
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == INSTALL_PERMISS_CODE){
+//            if (resultCode == RESULT_OK) {
+//                Log.e("lxf", "requestPermission " + ContextCompat.checkSelfPermission(this, Manifest.permission.REQUEST_INSTALL_PACKAGES));
+//            } else {
+//                Toast.makeText(MainActivity.this, "请您在设置中打开应用内安装权限", Toast.LENGTH_LONG).show();
+//            }
+//        }
+//    }
+
+    private static int INSTALL_PERMISS_CODE = 100001;
 
 }

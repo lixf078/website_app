@@ -1,9 +1,7 @@
 package cn.jubao360.jhdapp.wmd0;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,15 +21,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.NumberFormat;
+
 import cn.jubao360.jhdapp.wmd0.service.DownloadApkService;
 import cn.jubao360.jhdapp.wmd0.service.IDownloadListener;
 import cn.jubao360.jhdapp.wmd0.view.DialogEx;
 import cn.jubao360.jhdapp.wmd0.view.RegSuccessDialog;
 
-import java.io.Serializable;
-import java.text.NumberFormat;
-
-public class CustomerWebActivity extends Activity  implements IDownloadListener {
+public class CustomerWebActivity extends BaseActivity implements IDownloadListener {
 
     WebView mWebView = null;
 
@@ -129,18 +126,7 @@ public class CustomerWebActivity extends Activity  implements IDownloadListener 
             @Override
             public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
                 Log.e("lxf", "onDownloadStart url " + url + ", contentDisposition " + contentDisposition);
-                if (DownloadApkService.getState() == 0){
-                    DownLoadModel data = new DownLoadModel();
-                    data.setTitle(contentDisposition);
-                    data.setUrl(url);
-                    data.setVersion("1.0");
-                    data.setVersionCode("10");
-                    Intent intent = new Intent(CustomerWebActivity.this, DownloadApkService.class).putExtra("data", (Serializable) data);
-                    CustomerWebActivity.this.startService(intent);
-                    showProgressDialog();
-                }else {
-                    Toast.makeText(CustomerWebActivity.this, "当前正在下载，请稍后再试", Toast.LENGTH_SHORT).show();
-                }
+                downloadApk(url, contentDisposition);
             }
         });
 
@@ -300,4 +286,5 @@ public class CustomerWebActivity extends Activity  implements IDownloadListener 
 
         }
     }
+
 }

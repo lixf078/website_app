@@ -40,7 +40,7 @@ public class CacheUtil extends CacheUtilEx {
     private static String mMainSplashAdCn;
 
     public static void initCache(Context c){
-        if (TextUtils.isEmpty(mImgFileDir)){
+        if (!TextUtils.isEmpty(mImgFileDir)){
             return;
         }
         init(c, KHomeDir);
