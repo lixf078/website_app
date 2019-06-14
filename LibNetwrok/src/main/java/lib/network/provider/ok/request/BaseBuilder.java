@@ -13,7 +13,7 @@ import lib.network.param.NameValuePair;
 import lib.network.provider.IRequestBuilder;
 
 /**
- * @author yuansui
+ * @author lixf
  */
 abstract public class BaseBuilder implements IRequestBuilder {
 

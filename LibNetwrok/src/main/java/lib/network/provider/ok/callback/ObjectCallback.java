@@ -20,7 +20,7 @@ import okhttp3.Call;
 import okhttp3.Response;
 
 /**
- * @author yuansui
+ * @author lixf
  */
 public class ObjectCallback extends Callback<Object> {
 

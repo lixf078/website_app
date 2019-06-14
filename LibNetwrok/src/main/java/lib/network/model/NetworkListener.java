@@ -10,7 +10,7 @@ import lib.network.error.ParseNetError;
 /**
  * 网络任务监听
  *
- * @author yuansui
+ * @author lixf
  */
 public interface NetworkListener {
     /**

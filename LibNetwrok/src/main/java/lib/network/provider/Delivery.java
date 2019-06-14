@@ -6,7 +6,7 @@ import android.os.Looper;
 import lib.network.error.NetError;
 
 /**
- * @author yuansui
+ * @author lixf
  */
 public class Delivery {
 

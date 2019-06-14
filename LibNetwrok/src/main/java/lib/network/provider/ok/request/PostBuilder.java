@@ -12,7 +12,7 @@ import lib.network.model.NetworkRequest;
 import lib.network.param.NameValuePair;
 
 /**
- * @author yuansui
+ * @author lixf
  */
 public class PostBuilder extends BaseBuilder {
 

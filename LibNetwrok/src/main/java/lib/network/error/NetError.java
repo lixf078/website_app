@@ -1,7 +1,7 @@
 package lib.network.error;
 
 /**
- * @author yuansui
+ * @author lixf
  */
 public class NetError {
     // 错误提示文字

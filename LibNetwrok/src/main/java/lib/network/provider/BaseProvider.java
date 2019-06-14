@@ -6,7 +6,7 @@ import lib.network.model.NetworkListener;
 import lib.network.model.NetworkRequest;
 
 /**
- * @author yuansui
+ * @author lixf
  */
 abstract public class BaseProvider implements IDeliveryCallback {
 

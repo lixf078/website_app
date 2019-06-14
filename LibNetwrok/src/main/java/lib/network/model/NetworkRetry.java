@@ -3,7 +3,7 @@ package lib.network.model;
 /**
  * 网络重试的参数配置
  *
- * @author yuansui
+ * @author lixf
  */
 public class NetworkRetry {
     private int mCount;

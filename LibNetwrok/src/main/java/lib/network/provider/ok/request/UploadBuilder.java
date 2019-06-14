@@ -20,7 +20,7 @@ import lib.network.param.NameByteValuePair;
 import lib.network.param.NameFileValuePair;
 
 /**
- * @author yuansui
+ * @author lixf
  */
 public class UploadBuilder extends PostBuilder {
 

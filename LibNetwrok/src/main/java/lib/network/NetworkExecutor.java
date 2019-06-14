@@ -9,7 +9,7 @@ import lib.network.provider.ok.OkProvider;
 /**
  * 网络任务执行者
  *
- * @author yuansui
+ * @author lixf
  * @since 2016/4/11
  */
 public class NetworkExecutor {

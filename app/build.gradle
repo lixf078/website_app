@@ -2,18 +2,127 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion '25.0.0'
     defaultConfig {
-        applicationId "com.jjd.web"
+        applicationId "cn.jubao360.jhdapp.wmd0"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        versionCode 101
+        versionName "1.0.1"
     }
-    buildTypes {
+
+    signingConfigs {
+        debug {
+            keyAlias 'z773815862'
+            keyPassword 'juhaodai'
+            storeFile file('/jjd.keystore')
+            storePassword 'juhaodai'
+        }
+
         release {
+            keyAlias 'z773815862'
+            keyPassword 'juhaodai'
+            storeFile file('/jjd.keystore')
+            storePassword 'juhaodai'
+        }
+    }
+
+    buildTypes {
+        debug {
+            proguardFiles getDefaultProguardFile('proguard-android.txt'),
+                    'proguard-rules.pro'
+            signingConfig signingConfigs.release
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        release {
+            proguardFiles getDefaultProguardFile('proguard-android.txt'),
+                    'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            multiDexEnabled true
+        }
+    }
+    lintOptions {
+        abortOnError false
+    }
+
+    productFlavors {
+        release_h5banner1 {
+            manifestPlaceholders = [
+                    app_channel_name: "h5banner1",
+            ]
+        }
+        release_h5default {
+            manifestPlaceholders = [
+                    app_channel_name: "h5default",
+            ]
+        }
+        release_huawei {
+            manifestPlaceholders = [
+                    app_channel_name: "huawei",
+            ]
+        }
+        release_yyb {
+            manifestPlaceholders = [
+                    app_channel_name: "yyb",
+            ]
+        }
+        release_xiaomi {
+            manifestPlaceholders = [
+                    app_channel_name: "xiaomi",
+            ]
+        }
+        release_oppo {
+            manifestPlaceholders = [
+                    app_channel_name: "oppo",
+            ]
+        }
+        release_vivo {
+            manifestPlaceholders = [
+                    app_channel_name: "vivo",
+            ]
+        }
+        release_meizu {
+            manifestPlaceholders = [
+                    app_channel_name: "meizu",
+            ]
+        }
+        release_lianxiang {
+            manifestPlaceholders = [
+                    app_channel_name: "lianxiang",
+            ]
+        }
+        release_360 {
+            manifestPlaceholders = [
+                    app_channel_name: "360",
+            ]
+        }
+        release_baidu {
+            manifestPlaceholders = [
+                    app_channel_name: "baidu",
+            ]
+        }
+    }
+    //在生成的apk文件，修改下命名
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                // 前段
+                def fileName = outputFile.name.replace("UT_CO", "UTOU")
+                // 中段
+                fileName = fileName.replace("-flavors_debug", "")
+                fileName = fileName.replace("-debug", "_debug")
+                fileName = fileName.replace("-flavors_alpha", "_alpha")
+                fileName = fileName.replace("-alpha", "(t1)")
+                fileName = fileName.replace("-release_office", "_channel(office)")
+                fileName = fileName.replace("-release_store", "_channel(store)")
+                fileName = fileName.replace("-release", "")
+                // 尾端
+                fileName = fileName.replace(".apk", "_v${defaultConfig.versionName}.apk")
+
+                output.outputFile = new File(outputFile.parent, fileName)
+            }
         }
     }
 }
@@ -24,4 +133,6 @@ dependencies {
     compile project(path: ':LibNetwrok')
 
     compile 'com.android.support:support-v4:25+'
+//    compile 'com.tencent.bugly:crashreport:latest.release'
+    //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.2.0
 }

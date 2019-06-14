@@ -9,7 +9,7 @@ import lib.network.model.NetworkMethod;
 import lib.network.model.NetworkRequest;
 
 /**
- * @author yuansui
+ * @author lixf
  */
 public class GetBuilder extends BaseBuilder {
 

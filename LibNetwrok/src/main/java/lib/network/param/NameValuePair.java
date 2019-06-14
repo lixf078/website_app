@@ -1,7 +1,7 @@
 package lib.network.param;
 
 /**
- * @author yuansui
+ * @author lixf
  */
 public class NameValuePair {
     private String mName = "";

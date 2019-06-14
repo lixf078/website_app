@@ -7,7 +7,7 @@ import lib.network.param.NameValuePair;
 /**
  * http里使用的一些小工具
  *
- * @author yuansui
+ * @author lixf
  */
 public class NetworkUtil {
 

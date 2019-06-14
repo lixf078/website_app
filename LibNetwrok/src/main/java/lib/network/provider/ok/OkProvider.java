@@ -18,7 +18,7 @@ import lib.network.provider.ok.request.PostBuilder;
 import lib.network.provider.ok.request.UploadBuilder;
 
 /**
- * @author yuansui
+ * @author lixf
  */
 public class OkProvider extends BaseProvider {
 

@@ -1,7 +1,7 @@
 package lib.network.model;
 
 /**
- * @author yuansui
+ * @author lixf
  */
 public class NetworkConstants {
 

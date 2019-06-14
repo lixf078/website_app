@@ -13,7 +13,7 @@ import lib.network.provider.IRequestBuilder;
 import okhttp3.Call;
 
 /**
- * @author yuansui
+ * @author lixf
  */
 public class DownloadFileCallback extends FileCallBack {
 

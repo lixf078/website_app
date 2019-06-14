@@ -8,7 +8,7 @@ import lib.network.NetworkUtil;
 /**
  * 保存http返回的数据
  *
- * @author yuansui
+ * @author lixf
  */
 public class NetworkResponse {
     private String mText = NetworkUtil.KTextEmpty;
