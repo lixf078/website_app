@@ -37,6 +37,7 @@ import java.util.Random;
 import cn.jpush.android.api.JPushInterface;
 import cn.jubao360.jhdapp.wmd0.service.DownloadApkService;
 import cn.jubao360.jhdapp.wmd0.service.IDownloadListener;
+import cn.jubao360.jhdapp.wmd0.util.AppUtil;
 import cn.jubao360.jhdapp.wmd0.view.DialogEx;
 import cn.jubao360.jhdapp.wmd0.view.RegSuccessDialog;
 
@@ -152,7 +153,9 @@ public class MainActivity extends BaseActivity implements IDownloadListener {
         JJDJavaScriptInterface JSInterface = new JJDJavaScriptInterface(this); ////------
         mWebView.addJavascriptInterface(JSInterface, "JSInterface"); // 设置js接口  第一个参数事件接口实例，第二个是实例在js中的别名，这个在js中会用到
         String channel = getChannel();
-        mWebView.loadUrl("file:///android_asset/web/index.html?start_time=" + System.currentTimeMillis() + "&mid=" + channel);
+        String versionName = AppUtil.getVerName(MainActivity.this);
+
+        mWebView.loadUrl("file:///android_asset/web/index.html?start_time=" + System.currentTimeMillis() + "&mid=" + channel + "&app_version=" + versionName);
         DownloadApkService.setDownloadListener(this);
 
         JPushInterface.init(this);            // 初始化 JPush
